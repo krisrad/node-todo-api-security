@@ -45,7 +45,7 @@ app.get('/todos/:id', (req, res)=>{
         }
         res.send({todo});
     }).catch((err)=>{
-        res.status(404).send(err);
+        res.status(404);
     });    
 });
 
@@ -60,7 +60,7 @@ app.delete('/todos/:id', (req, res)=>{
         }
         res.send({todo});
     }).catch((err)=>{
-        res.status(400).send(err);
+        res.status(400);
     })
 });
 
@@ -69,7 +69,7 @@ app.patch('/todos/:id', (req, res)=> {
     var body = _.pick(req.body, ['text', 'completed']);
 
     if (!ObjectID.isValid(id)) {
-        return res.status(404).send();
+        return res.status(404);
     }
 
     if (_.isBoolean(body.completed) && body.completed) {
@@ -81,11 +81,11 @@ app.patch('/todos/:id', (req, res)=> {
 
     Todo.findByIdAndUpdate(id, {$set:body}, {new:true}).then((todo)=>{
         if (!todo) {
-            return res.status(404).send();
+            return res.status(404);
         }
         res.send({todo});
     }).catch((e)=>{
-        res.status(400).send();
+        res.status(400);
     });
 
 })
